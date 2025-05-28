@@ -1,0 +1,32 @@
+.btn-success{
+    background-color: red;
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    margin: 5px;
+    border-radius: 5px;
+}
+.btn-danger{
+    background-color: #cccccc;
+    color:black;
+    padding: 15px 40px;
+    border: none;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #a0a0a0;
+}
+.dateRangePicker>div{
+    padding: 0px;
+    width: 250px;
+   }
+   .dateRangePicker>div>input{
+    padding: 5px 10px; 
+   
+   }
+   .statusFilter>div{
+      padding: 5px 10px;
+      font-size: 13px;
+   }
+   .statusItem{
+    font-size: 13px !important;
+   }

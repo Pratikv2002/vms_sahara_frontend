@@ -1,0 +1,206 @@
+/* Design System Variables */
+:root {
+  /* Colors */
+  --color-primary: var(--primary-color);
+  --color-primary-light: #e3f2fd;
+  --color-success: #4CAF50;
+  --color-text-primary: #2c3e50;
+  --color-text-secondary: #666;
+  --color-background: #ffffff;
+  --color-background-secondary: #f8f9fa;
+  --color-border: #eee;
+  --color-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Spacing (8pt grid) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.15);
+
+  /* Typography */
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+}
+
+/* Modal Overlay */
+.form-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-overlay);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+/* Form Container */
+.form-container {
+  border: none;
+  border-radius: var(--radius-lg);
+  margin: var(--spacing-sm);
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--color-background);
+  position: relative;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.form-header {
+  padding: var(--spacing-md) var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-background-secondary);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.header-title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.close-button {
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: color 0.2s;
+}
+
+.close-button:hover {
+  color: var(--color-text-primary);
+}
+
+/* Scrollable Content */
+.form-content {
+  height: 60vh;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+  background-color: var(--color-background);
+}
+
+/* Form Sections */
+.form-section {
+  background-color: var(--color-background-secondary);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-xs);
+}
+
+.section-title {
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+  font-weight: 500;
+}
+
+/* Photo Section */
+.photo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.photo-preview {
+  width: 150px;
+  height: 120px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  border: 2px solid var(--color-border);
+}
+
+.photo-button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.photo-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Form Fields */
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Footer */
+.form-footer {
+  padding: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-background-secondary);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.submit-button {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.submit-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Custom Scrollbar */
+.form-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.form-content::-webkit-scrollbar-track {
+  background: var(--color-background-secondary);
+  border-radius: 3px;
+}
+
+.form-content::-webkit-scrollbar-thumb {
+  background: var(--color-text-secondary);
+  border-radius: 3px;
+}
+
+.form-content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-primary);
+}

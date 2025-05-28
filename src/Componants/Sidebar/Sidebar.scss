@@ -1,0 +1,45 @@
+.sidebar{
+    flex: 1;
+    // background: #2b2d3a;
+    // color: #fff;
+    height: 96vh;
+    position: sticky;
+    top: 2vh;
+    overflow-y: auto;
+    border-radius: 8px;
+    margin: 2vh 1vw;
+    @include mobile{
+        display: none;
+    }
+    .logo_holder{
+        height: 45px;
+        padding: 16px auto;
+        margin: 8px 0 24px 0;
+        text-align: left;
+        img{
+            height: 100%;
+            margin: 8px 16px;
+        }
+    }
+    .option{
+        display: flex;
+        transition: all 0.3s ease-in-out;
+        justify-content: space-between;
+        padding: 8px 16px;
+        cursor: pointer;
+        align-items: center;
+        margin: 8px 16px;
+        font-size: 12px;
+        border-radius: 8px;
+        .option_icon{
+            flex: 1;
+        }
+        .option_text{
+            flex: 5;
+            span{
+                font-weight: 700;
+            }
+        }
+
+    }
+}

@@ -1,0 +1,29 @@
+@mixin mobile {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+  
+@mixin sm {
+  @media (max-width: 300px) {
+    @content;
+  }
+}
+
+:root {
+  --primary-color:#3E74D0 ; 
+  --primary-light-color: #89A9E6;
+  --secondary-color:#FF2618 ;
+  --secondary-light-color:#FF9187; 
+  --secondary-color-gradient:linear-gradient( 180deg,#FF2618, #BA3B00);
+  --background-linear-gradient: linear-gradient( 135deg,#ffffff, #E4E9F6);
+ 
+}
+
+body{
+  font-family: 'Poppins' !important;
+  }
+  .css-1f4hnf{
+    width: 95vw;
+  }

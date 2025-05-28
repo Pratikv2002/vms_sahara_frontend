@@ -1,0 +1,9 @@
+@import "../../App.scss";
+
+.actionDiv{
+    position: relative;
+    z-index: 10; 
+    @include mobile{
+        margin-right: 2em !important;
+    }
+}
