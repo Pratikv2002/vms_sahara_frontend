@@ -1,93 +1,46 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from '../../authAxios.js'; // Import Axios
 import { Trash2, Edit2, Plus } from 'lucide-react';
+import './VisitorTypeSettings.css'; // Import the CSS file
 
-// Mock API functions to simulate backend operations
-// In a real application, these would be actual API calls (e.g., using fetch or axios)
-const mockVisitorTypesData = [
-  { id: '1', name: 'Guest', is_active: true },
-  { id: '2', name: 'Vendor', is_active: false },
-  { id: '3', name: 'Employee', is_active: true },
-];
+// Base URL for your API - Assuming this is defined globally or passed via context/env
+// For demonstration, I'll use a placeholder. Replace 'YOUR_BASE_API_URL' with your actual base URL.
+// Example: const API_BASE_URL = 'http://localhost:3000/api';
+// You mentioned "dont add base url i have already defined it", so ensure this is set up correctly in your environment.
+// For the purpose of making this code runnable for you, I'll use a placeholder.
+const API_BASE_URL = 'https://api.example.com'; // **REPLACE THIS WITH YOUR ACTUAL BASE URL**
 
-let nextId = mockVisitorTypesData.length + 1;
-
-const simulateApiCall = (data, delay = 500) => {
-  return new Promise(resolve => setTimeout(() => resolve({ data }), delay));
-};
-
-const mockApi = {
-  getVisitorTypes: async () => {
-    // Simulate fetching data
-    return simulateApiCall({ data: { results: mockVisitorTypesData } });
-  },
-  addVisitorType: async (name) => {
-    // Simulate adding a new visitor type
-    const newVisitorType = { id: String(nextId++), name, is_active: true };
-    mockVisitorTypesData.push(newVisitorType);
-    return simulateApiCall({ data: newVisitorType });
-  },
-  updateVisitorType: async (id, name) => {
-    // Simulate updating an existing visitor type
-    const index = mockVisitorTypesData.findIndex(vt => vt.id === id);
-    if (index !== -1) {
-      mockVisitorTypesData[index].name = name;
-    }
-    return simulateApiCall({ data: mockVisitorTypesData[index] });
-  },
-  deleteVisitorType: async (id) => {
-    // Simulate deleting a visitor type
-    const initialLength = mockVisitorTypesData.length;
-    mockVisitorTypesData.splice(mockVisitorTypesData.findIndex(vt => vt.id === id), 1);
-    return simulateApiCall({ success: mockVisitorTypesData.length < initialLength });
-  },
-  toggleVisitorTypeActive: async (id, isActive) => {
-    // Simulate activating/deactivating a visitor type
-    const index = mockVisitorTypesData.findIndex(vt => vt.id === id);
-    if (index !== -1) {
-      mockVisitorTypesData[index].is_active = isActive;
-    }
-    return simulateApiCall({ data: mockVisitorTypesData[index] });
-  },
-};
-
-// Simple Switch component using button and Tailwind
+// Simple Switch component using button and plain CSS
 const Switch = ({ checked, onChange }) => (
   <button
     type="button"
     role="switch"
     aria-checked={checked}
     onClick={() => onChange(!checked)}
-    className={`relative inline-flex h-6 w-11 items-center rounded-full ${
-      checked ? 'bg-green-500' : 'bg-gray-300'
-    } focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 transition-colors duration-200`}
+    className={`switch-button ${checked ? 'checked' : 'unchecked'}`}
   >
-    <span
-      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
-        checked ? 'translate-x-6' : 'translate-x-1'
-      }`}
-    />
+    <span className="switch-slider" />
   </button>
 );
 
-// Simple Button component
+// Simple Button component using plain CSS
 const Button = ({ children, onClick, size = 'md', variant = 'default', className = '', ...props }) => {
-  const baseClasses = 'inline-flex items-center justify-center rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:pointer-events-none';
   const sizeClasses = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
-    icon: 'p-2',
+    sm: 'button-sm',
+    md: 'button-md',
+    icon: 'button-icon',
   };
   const variantClasses = {
-    default: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
-    destructive: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
-    outline: 'border border-gray-300 hover:bg-gray-100 focus:ring-blue-500',
-    green: 'bg-green-600 hover:bg-green-700 text-white focus:ring-green-500',
+    default: 'button-default',
+    destructive: 'button-destructive',
+    outline: 'button-outline',
+    green: 'button-green',
   };
 
   return (
     <button
       onClick={onClick}
-      className={`${baseClasses} ${sizeClasses[size]} ${variantClasses[variant] || variantClasses.default} ${className}`}
+      className={`button-base ${sizeClasses[size]} ${variantClasses[variant] || variantClasses.default} ${className}`}
       {...props}
     >
       {children}
@@ -95,27 +48,27 @@ const Button = ({ children, onClick, size = 'md', variant = 'default', className
   );
 };
 
-// Simple Input component
+// Simple Input component using plain CSS
 const Input = ({ value, onChange, placeholder, className = '', ...props }) => (
   <input
     value={value}
     onChange={onChange}
     placeholder={placeholder}
-    className={`w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50 ${className}`}
+    className={`input-field ${className}`}
     {...props}
   />
 );
 
-// Simple Dialog component (basic modal)
+// Simple Dialog component (basic modal) using plain CSS
 const Dialog = ({ open, onOpenChange, children }) => {
   if (!open) return null;
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      className="dialog-overlay"
       onClick={() => onOpenChange(false)}
     >
       <div
-        className="bg-white rounded-lg max-w-md w-full p-6 shadow-lg transform transition-all sm:my-8 sm:w-full"
+        className="dialog-content"
         onClick={e => e.stopPropagation()}
       >
         {children}
@@ -125,10 +78,10 @@ const Dialog = ({ open, onOpenChange, children }) => {
 };
 
 // Dialog subcomponents
-const DialogHeader = ({ children }) => <div className="mb-4">{children}</div>;
-const DialogTitle = ({ children }) => <h3 className="text-lg font-semibold text-gray-900">{children}</h3>;
-const DialogContent = ({ children }) => <div>{children}</div>;
-const DialogFooter = ({ children }) => <div className="mt-6 flex justify-end gap-2">{children}</div>;
+const DialogHeader = ({ children }) => <div className="dialog-header">{children}</div>;
+const DialogTitle = ({ children }) => <h3 className="dialog-title">{children}</h3>;
+const DialogContent = ({ children }) => <div className="dialog-content-inner">{children}</div>;
+const DialogFooter = ({ children }) => <div className="dialog-footer">{children}</div>;
 
 // DialogTrigger just a wrapper to render children that triggers dialog open
 const DialogTrigger = ({ children, onClick }) =>
@@ -143,12 +96,21 @@ const VisitorTypeSettings = () => {
   const [editingId, setEditingId] = useState(null);
   const [open, setOpen] = useState(false); // State to control the dialog visibility
 
-  // Function to fetch visitor types from the mock API
+  // Function to fetch visitor types from the API
   const fetchVisitorTypes = async () => {
     setLoading(true);
     try {
-      const res = await mockApi.getVisitorTypes();
-      setVisitorTypes(res.data.data.results);
+      const response = await axios.get(`/get-visitor-types`);
+      // Assuming the response structure is { status: 1, data: { results: [...] } }
+      if (response.data.status === 1 && response.data.data && response.data.data.results) {
+        setVisitorTypes(response.data.data.results.map(vt => ({
+          ...vt,
+          is_active: vt.is_active === 1 // Convert 1 to true, 0 to false
+        })));
+      } else {
+        console.error("API response format error:", response.data);
+        setVisitorTypes([]);
+      }
     } catch (error) {
       console.error("Failed to fetch visitor types:", error);
       // In a real app, you'd show a user-friendly error message
@@ -166,9 +128,11 @@ const VisitorTypeSettings = () => {
     }
     try {
       if (editingId) {
-        await mockApi.updateVisitorType(editingId, name);
+        // Update existing visitor type
+        await axios.put(`/update-visitor-type/${editingId}`, { name });
       } else {
-        await mockApi.addVisitorType(name);
+        // Add new visitor type
+        await axios.post(`/add-visitor-type`, { name });
       }
       setName(''); // Clear input field
       setEditingId(null); // Reset editing state
@@ -176,24 +140,30 @@ const VisitorTypeSettings = () => {
       fetchVisitorTypes(); // Refresh the list
     } catch (error) {
       console.error("Failed to add/update visitor type:", error);
+      // Handle specific API errors (e.g., duplicate name) here
     }
   };
 
   // Function to handle deleting a visitor type
   const handleDelete = async (id) => {
-    // In a real app, you might want a confirmation dialog here
-    try {
-      await mockApi.deleteVisitorType(id);
-      fetchVisitorTypes(); // Refresh the list
-    } catch (error) {
-      console.error("Failed to delete visitor type:", error);
+    if (window.confirm("Are you sure you want to delete this visitor type?")) { // Simple confirmation
+      try {
+        await axios.delete(`/delete-visitor-type/${id}`);
+        fetchVisitorTypes(); // Refresh the list
+      } catch (error) {
+        console.error("Failed to delete visitor type:", error);
+      }
     }
   };
 
   // Function to handle toggling the active status of a visitor type
-  const handleToggleActive = async (id, isActive) => {
+  const handleToggleActive = async (id, currentIsActive) => {
     try {
-      await mockApi.toggleVisitorTypeActive(id, !isActive); // Toggle the status
+      if (currentIsActive) {
+        await axios.patch(`/deactivate-visitor-type/${id}`);
+      } else {
+        await axios.patch(`/activate-visitor-type/${id}`);
+      }
       fetchVisitorTypes(); // Refresh the list
     } catch (error) {
       console.error("Failed to toggle visitor type status:", error);
@@ -213,10 +183,10 @@ const VisitorTypeSettings = () => {
   }, []); // Empty dependency array means this runs once on mount
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 shadow-xl bg-white rounded-lg p-6 font-sans">
+    <div className="visitor-type-settings-container">
       {/* Header section with title and Add button */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Visitor Types</h2>
+      <div className="visitor-type-settings-header">
+        <h2>Visitor Types</h2>
         <DialogTrigger
           onClick={() => {
             setOpen(true); // Open dialog
@@ -224,9 +194,11 @@ const VisitorTypeSettings = () => {
             setEditingId(null); // Ensure no ID is set for new entry
           }}
         >
-          <Button size="sm" variant="green" className="flex items-center space-x-2">
-            <Plus className="h-4 w-4" />
-            <span>Add</span>
+          <Button size="sm" variant="green" className="add-button">
+            <div className="add-button-content">
+              <Plus size={16} />
+              <span>Add</span>
+            </div>
           </Button>
         </DialogTrigger>
       </div>
@@ -241,7 +213,7 @@ const VisitorTypeSettings = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter visitor type name"
-            className="mt-2"
+            className="input-margin-top"
           />
         </DialogContent>
         <DialogFooter>
@@ -255,35 +227,35 @@ const VisitorTypeSettings = () => {
       </Dialog>
 
       {/* Main content area for displaying visitor types */}
-      <div className="mt-4">
+      <div className="visitor-type-list-area">
         {loading ? (
           // Loading state
-          <p className="text-center text-gray-500 py-8">Loading visitor types...</p>
+          <p className="loading-message">Loading visitor types...</p>
         ) : visitorTypes.length === 0 ? (
           // Empty state
-          <p className="text-center text-gray-500 py-8">No visitor types found. Click "Add" to create one.</p>
+          <p className="empty-state-message">No visitor types found. Click "Add" to create one.</p>
         ) : (
           // List of visitor types
-          <div className="space-y-4">
+          <div className="visitor-types-list-container">
             {visitorTypes.map((vt) => (
               <div
                 key={vt.id}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-100"
+                className="visitor-type-item"
               >
-                <span className="font-medium text-gray-800 text-lg">{vt.name}</span>
-                <div className="flex items-center gap-3">
+                <span className="visitor-type-name">{vt.name}</span>
+                <div className="visitor-type-actions">
                   {/* Switch to toggle active status */}
                   <Switch
-                    checked={!!vt.is_active}
+                    checked={!!vt.is_active} // Ensure boolean
                     onChange={() => handleToggleActive(vt.id, vt.is_active)}
                   />
                   {/* Edit button */}
                   <Button size="icon" variant="outline" onClick={() => handleEdit(vt)}>
-                    <Edit2 className="w-4 h-4 text-blue-500" />
+                    <Edit2 size={16} className="icon-blue" />
                   </Button>
                   {/* Delete button */}
                   <Button size="icon" variant="destructive" onClick={() => handleDelete(vt.id)}>
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 size={16} />
                   </Button>
                 </div>
               </div>
