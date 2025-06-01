@@ -9,7 +9,8 @@ import { GiBackwardTime } from "react-icons/gi";
 import { axisClasses } from "@mui/x-charts/ChartsAxis";
 import { colors } from "@mui/material";
 import Chart from "chart.js/auto";
-import { Bar, registerables } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+
 import { BarChart } from "@mui/x-charts/BarChart";
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import { useNavigate } from "react-router-dom";
