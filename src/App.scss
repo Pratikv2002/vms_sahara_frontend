@@ -1,3 +1,6 @@
+// @import "tailwindcss";
+
+
 @mixin mobile {
   @media (max-width: 600px) {
     @content;
