@@ -11,7 +11,7 @@ import "./Form.css";
 
 export default function Form({ onClose, refresh }) {
   const [openCamera, setopenCamera] = useState(false);
-  const [imageSrc, setImageSrc] = useState(photoImg);
+  const [imageSrc, setImageSrc] = useState("");
   const [employeList, setEmployeList] = useState([]);
   const [locationList, setLocationList] = useState([]);
   const [designationList, setDesignationList] = useState([]);

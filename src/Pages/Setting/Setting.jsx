@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../authAxios.js'; // Import Axios
+import axios from '../../authAxios.js'; 
 import { Trash2, Edit2, Plus } from 'lucide-react';
-import './VisitorTypeSettings.css'; // Import the CSS file
+import './VisitorTypeSettings.css'; 
 
-// Base URL for your API - Assuming this is defined globally or passed via context/env
-// For demonstration, I'll use a placeholder. Replace 'YOUR_BASE_API_URL' with your actual base URL.
-// Example: const API_BASE_URL = 'http://localhost:3000/api';
-// You mentioned "dont add base url i have already defined it", so ensure this is set up correctly in your environment.
-// For the purpose of making this code runnable for you, I'll use a placeholder.
-const API_BASE_URL = 'https://api.example.com'; // **REPLACE THIS WITH YOUR ACTUAL BASE URL**
-
-// Simple Switch component using button and plain CSS
 const Switch = ({ checked, onChange }) => (
   <button
     type="button"
@@ -23,7 +15,6 @@ const Switch = ({ checked, onChange }) => (
   </button>
 );
 
-// Simple Button component using plain CSS
 const Button = ({ children, onClick, size = 'md', variant = 'default', className = '', ...props }) => {
   const sizeClasses = {
     sm: 'button-sm',
@@ -48,7 +39,6 @@ const Button = ({ children, onClick, size = 'md', variant = 'default', className
   );
 };
 
-// Simple Input component using plain CSS
 const Input = ({ value, onChange, placeholder, className = '', ...props }) => (
   <input
     value={value}
@@ -59,7 +49,6 @@ const Input = ({ value, onChange, placeholder, className = '', ...props }) => (
   />
 );
 
-// Simple Dialog component (basic modal) using plain CSS
 const Dialog = ({ open, onOpenChange, children }) => {
   if (!open) return null;
   return (
